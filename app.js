@@ -5,9 +5,16 @@ var express = require('express');
 var passport = require('passport');
 var OAuth2Strategy = require('passport-oauth2');
 var request = require('request');
+const url = require('url');
 
 var gitterHost = process.env.HOST || 'https://gitter.im';
 var port = process.env.PORT || 7000;
+
+// validating that the user argument is a valid URL otherwise the passport authenticator will fail silently
+const gitterHostUrl = url.parse(gitterHost);
+if (['https:', 'http:'].indexOf(gitterHostUrl.protocol) < 0) {
+  throw new Error('the gitter host URL needs to have http(s) protocol');
+}
 
 // Client OAuth configuration
 var clientId = process.env.GITTER_KEY ? process.env.GITTER_KEY.trim() : undefined;
