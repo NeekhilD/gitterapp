@@ -17,7 +17,8 @@
   },
   "scripts": {
     "start": "node app.js",
-    "validate": "prettier --check '**/*.js'",
+    "validate": "eslint . && prettier --check '**/*.js'",
+    "validate-fix": "eslint --fix . && prettier --write '**/*.js'",
     "pretest": "make restart-test-server",
     "test": "NODE_ENV=test mocha",
     "posttest": "make stop-test-server"
